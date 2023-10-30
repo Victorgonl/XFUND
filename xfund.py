@@ -3,7 +3,7 @@ import json
 import zipfile
 
 
-XFUND_URL = "https://github.com/doc-analysis/XFUND/releases/download/v1.0/"
+XFUND_URL = "https://github.com/Victorgonl/XFUND/releases/download/v1.0/"
 DOWNLOAD_FOLDER = "./xfund_original/"
 XFUND_FOLDER = "./xfund/"
 XFUND_DATA_FOLDER = f"{XFUND_FOLDER}data/"
