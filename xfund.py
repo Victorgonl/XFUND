@@ -1,9 +1,10 @@
 import os
 import json
 import zipfile
+import pathlib
 
 
-ROOT_PATH = os.path.abspath(os.getcwd())
+ROOT_PATH = pathlib.Path(__file__).parent.resolve()
 XFUND_URL = "https://github.com/Victorgonl/XFUND/releases/download/v1.0/"
 DOWNLOAD_FOLDER = f"{ROOT_PATH}/xfund_original/"
 XFUND_FOLDER = f"{ROOT_PATH}/xfund/"
