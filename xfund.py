@@ -3,13 +3,14 @@ import json
 import zipfile
 
 
+ROOT_PATH = os.path.abspath(os.getcwd())
 XFUND_URL = "https://github.com/Victorgonl/XFUND/releases/download/v1.0/"
-DOWNLOAD_FOLDER = "./xfund_original/"
-XFUND_FOLDER = "./xfund/"
+DOWNLOAD_FOLDER = f"{ROOT_PATH}/xfund_original/"
+XFUND_FOLDER = f"{ROOT_PATH}/xfund/"
 XFUND_DATA_FOLDER = f"{XFUND_FOLDER}data/"
 XFUND_IMAGE_FOLDER = f"{XFUND_FOLDER}image/"
+XFUND_CITATION_FILE = f"{ROOT_PATH}/xfund.bib"
 XFUND_LANGUAGES = ["zh", "de", "es", "fr", "it", "ja", "pt"]
-XFUND_CITATION_FILE = "./xfund.bib"
 
 
 def download_file(url, download_directory):
