@@ -32,7 +32,7 @@ def extract_data_from_json(data_file_directory):
                     "label": document_entitie["label"].upper(),
                     "words": [],
                     "boxes": [],
-                    "link": document_entitie["linking"]}
+                    "links": document_entitie["linking"]}
             for word_box in document_entitie["words"]:
                 word = word_box["text"]
                 box = word_box["box"]
