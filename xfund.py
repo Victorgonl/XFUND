@@ -13,6 +13,10 @@ XFUND_IMAGE_FOLDER = f"{XFUND_FOLDER}image/"
 XFUND_CITATION_FILE = f"{ROOT_PATH}/xfund.bib"
 XFUND_LANGUAGES = ["zh", "de", "es", "fr", "it", "ja", "pt"]
 
+INFO_NAME = "name"
+INFO_SPLITS = "splits"
+INFO_CITATION = "citation"
+
 
 def download_file(url, download_directory):
     os.system(f"wget -c {url} -P {download_directory}")
@@ -56,9 +60,9 @@ def save_data(data, data_directory):
 def xfund(languages=XFUND_LANGUAGES):
     os.makedirs(DOWNLOAD_FOLDER, exist_ok=True)
     os.makedirs(XFUND_DATA_FOLDER, exist_ok=True)
-    xfund_info = {"name": "XFUND",
-                  "split": {},
-                  "citation": None}
+    xfund_info = {INFO_NAME: "XFUND",
+                  INFO_SPLITS: {},
+                  INFO_CITATION: None}
     with open(XFUND_CITATION_FILE, "r") as xfund_citation:
         xfund_info["citation"] = xfund_citation.read()
     for language in languages:
