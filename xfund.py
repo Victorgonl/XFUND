@@ -83,12 +83,12 @@ def xfund(languages=XFUND_LANGUAGES):
         save_data(val_data, XFUND_DATA_FOLDER)
         extract_zip(f"{DOWNLOAD_FOLDER}/{val_zip_file}", XFUND_IMAGE_FOLDER)
          # splits
-        xfund_info["split"][language] = {"train": [],
+        xfund_info[INFO_SPLITS][language] = {"train": [],
                             "val": []}
         for train_sample_key in train_data.keys():
-            xfund_info["split"][language]["train"].append(train_sample_key)
+            xfund_info[INFO_SPLITS][language]["train"].append(train_sample_key)
         for val_sample_key in val_data.keys():
-            xfund_info["split"][language]["val"].append(val_sample_key)
+            xfund_info[INFO_SPLITS][language]["val"].append(val_sample_key)
     with open(f"{XFUND_FOLDER}/xfund.json", "w") as xfund_info_json:
         json.dump(xfund_info, xfund_info_json, indent=4)
 
