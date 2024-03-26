@@ -2,6 +2,7 @@ import os
 import json
 import zipfile
 import pathlib
+import sys
 
 
 ROOT_PATH = pathlib.Path(__file__).parent.resolve()
@@ -58,6 +59,8 @@ def save_data(data, data_directory):
 
 
 def xfund(languages=XFUND_LANGUAGES):
+    if any(languages) not in XFUND_LANGUAGES:
+        raise Exception(f"Language(s) not available on XFUND. Try these {XFUND_LANGUAGES}.")
     os.makedirs(DOWNLOAD_FOLDER, exist_ok=True)
     os.makedirs(XFUND_DATA_FOLDER, exist_ok=True)
     xfund_info = {INFO_NAME: "XFUND",
@@ -94,4 +97,5 @@ def xfund(languages=XFUND_LANGUAGES):
 
 
 if __name__ == '__main__':
-    xfund()
+    languages_to_load = sys.argv[1:]
+    xfund(languages=languages_to_load) if len(languages_to_load) else xfund()
