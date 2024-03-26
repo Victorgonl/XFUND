@@ -59,7 +59,7 @@ def save_data(data, data_directory):
 
 
 def xfund(languages=XFUND_LANGUAGES):
-    if any(languages) not in XFUND_LANGUAGES:
+    if not all(language in XFUND_LANGUAGES for language in languages):
         raise Exception(f"Language(s) not available on XFUND. Try these {XFUND_LANGUAGES}.")
     os.makedirs(DOWNLOAD_FOLDER, exist_ok=True)
     os.makedirs(XFUND_DATA_FOLDER, exist_ok=True)
