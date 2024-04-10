@@ -4,6 +4,9 @@ import zipfile
 import pathlib
 import sys
 
+from utils.sort import sort_samples_data
+from utils.sort import UflaFormsJSONEncoder
+
 
 ROOT_PATH = pathlib.Path(__file__).parent.resolve()
 XFUND_URL = "https://github.com/Victorgonl/XFUND/releases/download/v1.0/"
@@ -13,10 +16,13 @@ XFUND_DATA_FOLDER = f"{XFUND_FOLDER}data/"
 XFUND_IMAGE_FOLDER = f"{XFUND_FOLDER}image/"
 XFUND_CITATION_FILE = f"{ROOT_PATH}/xfund.bib"
 XFUND_LANGUAGES = ["zh", "de", "es", "fr", "it", "ja", "pt"]
+XFUND_LANGUAGES = ["pt"]
 
-INFO_NAME = "name"
+INFO_NAME = "dataset_name"
 INFO_SPLITS = "splits"
 INFO_CITATION = "citation"
+
+DATASET_INFO_FILE = "dataset_info.json"
 
 
 def download_file(url, download_directory):
@@ -30,7 +36,7 @@ def extract_data_from_json(data_file_directory):
     for document in json_data["documents"]:
         sample = []
         for document_entitie in document["document"]:
-            entitie = {"id": document_entitie["id"],
+            entity = {"id": document_entitie["id"],
                 "text": document_entitie["id"],
                     "text": document_entitie["text"],
                     "box": document_entitie["box"],
@@ -41,10 +47,11 @@ def extract_data_from_json(data_file_directory):
             for word_box in document_entitie["words"]:
                 word = word_box["text"]
                 box = word_box["box"]
-                entitie["words"].append(word)
-                entitie["boxes"].append(box)
-            sample.append(entitie)
+                entity["words"].append(word)
+                entity["boxes"].append(box)
+            sample.append(entity)
         data[document["id"]] = sample
+    data = sort_samples_data(data, sort_by_relations=True)
     return data
 
 def extract_zip(zip_directory, extract_directory):
@@ -86,14 +93,14 @@ def xfund(languages=XFUND_LANGUAGES):
         save_data(val_data, XFUND_DATA_FOLDER)
         extract_zip(f"{DOWNLOAD_FOLDER}/{val_zip_file}", XFUND_IMAGE_FOLDER)
          # splits
-        xfund_info[INFO_SPLITS][language] = {"train": [],
+        xfund_info[INFO_SPLITS] = {"train": [],
                             "val": []}
         for train_sample_key in train_data.keys():
-            xfund_info[INFO_SPLITS][language]["train"].append(train_sample_key)
+            xfund_info[INFO_SPLITS]["train"].append(train_sample_key)
         for val_sample_key in val_data.keys():
-            xfund_info[INFO_SPLITS][language]["val"].append(val_sample_key)
-    with open(f"{XFUND_FOLDER}/xfund.json", "w") as xfund_info_json:
-        json.dump(xfund_info, xfund_info_json, indent=4)
+            xfund_info[INFO_SPLITS]["val"].append(val_sample_key)
+    with open(f"{XFUND_FOLDER}/{DATASET_INFO_FILE}", "w") as xfund_info_json:
+        json.dump(xfund_info, xfund_info_json, cls=UflaFormsJSONEncoder, indent=4)
 
 
 if __name__ == '__main__':
