@@ -77,6 +77,7 @@ def xfund(languages=XFUND_LANGUAGES):
     xfund_info = {INFO_NAME: "XFUND", INFO_SPLITS: {}, INFO_CITATION: None}
     with open(XFUND_CITATION_FILE, "r") as xfund_citation:
         xfund_info["citation"] = xfund_citation.read()
+    xfund_info[INFO_SPLITS] = {}
     for language in languages:
         # train samples
         train_json_file = f"{language}.train.json"
@@ -95,11 +96,12 @@ def xfund(languages=XFUND_LANGUAGES):
         save_data(val_data, XFUND_DATA_FOLDER)
         extract_zip(f"{DOWNLOAD_FOLDER}/{val_zip_file}", XFUND_IMAGE_FOLDER)
         # splits
-        xfund_info[INFO_SPLITS] = {"train": [], "val": []}
+        xfund_info[INFO_SPLITS][f"{language}_train"] = []
         for train_sample_key in train_data.keys():
-            xfund_info[INFO_SPLITS]["train"].append(train_sample_key)
+            xfund_info[INFO_SPLITS][f"{language}_train"].append(train_sample_key)
+        xfund_info[INFO_SPLITS][f"{language}_val"] = []
         for val_sample_key in val_data.keys():
-            xfund_info[INFO_SPLITS]["val"].append(val_sample_key)
+            xfund_info[INFO_SPLITS][f"{language}_val"].append(val_sample_key)
     with open(f"{XFUND_FOLDER}/{DATASET_INFO_FILE}", "w") as xfund_info_json:
         json.dump(xfund_info, xfund_info_json, cls=UflaFormsJSONEncoder, indent=4)
 
