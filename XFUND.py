@@ -1,4 +1,3 @@
-# Lint as: python3
 import json
 import logging
 import os
@@ -52,14 +51,14 @@ def merge_bbox(bbox_list):
     return [min(x0), min(y0), max(x1), max(y1)]
 
 
-_URL = "https://github.com/Victorgonl/XFUND/releases/tag/v1.0/"
+_URL = "https://github.com/Victorgonl/XFUND/releases/download/v1.0/"
 
 _LANG = ["zh", "de", "es", "fr", "it", "ja", "pt"]
 logger = logging.getLogger(__name__)
 
 
-class XFUNConfig(datasets.BuilderConfig):
-    """BuilderConfig for XFUN."""
+class XFUNDConfig(datasets.BuilderConfig):
+    """BuilderConfig for XFUND."""
 
     def __init__(self, lang, additional_langs=None, **kwargs):
         """
@@ -67,15 +66,15 @@ class XFUNConfig(datasets.BuilderConfig):
             lang: string, language for the input text
             **kwargs: keyword arguments forwarded to super.
         """
-        super(XFUNConfig, self).__init__(**kwargs)
+        super(XFUNDConfig, self).__init__(**kwargs)
         self.lang = lang
         self.additional_langs = additional_langs
 
 
-class XFUN(datasets.GeneratorBasedBuilder):
-    """XFUN dataset."""
+class XFUND(datasets.GeneratorBasedBuilder):
+    """XFUND dataset."""
 
-    BUILDER_CONFIGS = [XFUNConfig(name=f"xfun.{lang}", lang=lang) for lang in _LANG]
+    BUILDER_CONFIGS = [XFUNDConfig(name=f"xfund.{lang}", lang=lang) for lang in _LANG]
 
     tokenizer = AutoTokenizer.from_pretrained("xlm-roberta-base")
 
