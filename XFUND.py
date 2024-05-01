@@ -357,11 +357,20 @@ class XFUND(datasets.GeneratorBasedBuilder):
                         padding="max_length",
                         pad_to_multiple_of=8,
                     )
+                    assert len(item["bbox"]) == len(item["labels"])
+                    for i in range(len(item["bbox"]), CHUNK_SIZE):
+                        item["bbox"].append(SEP_TOKEN_BOX)
+                        item["labels"].append(O_LABEL)
                     for i in range(len(item["entities"])):
                         item["entities"][i]["start"] += 1
                         item["entities"][i]["end"] += 1
                     for i in range(len(item["relations"])):
                         item["relations"][i]["start_index"] += 1
                         item["relations"][i]["end_index"] += 1
+
+                    assert len(item["input_ids"]) == CHUNK_SIZE
+                    assert len(item["bbox"]) == CHUNK_SIZE
+                    assert len(item["labels"]) == CHUNK_SIZE
+                    assert len(item["attention_mask"]) == CHUNK_SIZE
 
                     yield f"{doc['id']}_{chunk_id}", item
