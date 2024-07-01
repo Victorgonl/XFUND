@@ -1,6 +1,6 @@
 # XFUND
 
-<a href="https://github.com/doc-analysis/XFUND">XFUND</a> dataset formatted to the <a href="https://github.com/Victorgonl/UFLA-FORMS">UFLA-FORMS</a> dataset format.
+<a href="https://github.com/doc-analysis/XFUND">XFUND</a> dataset formatted to the <a href="https://github.com/LabRI-Information-Retrieval-Lab/UFLA-FORMS">UFLA-FORMS</a> dataset format.
 
 ## References
 
